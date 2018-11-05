@@ -2,27 +2,26 @@
 <#import "parts/logInOut.ftl" as l>
 <@c.page>
 <@l.logout/>
-
+<div><a href="/user">Список пользователей</a></div>
 
 <form method="post">
     <input type="text" name="text" placeholder="Введите сообщение"/>
     <input type="text" name="tag" placeholder="Введите тэг"/>
-    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+    <input type="hidden" name="_csrf" value="${_csrf.token}"/>  <#--csrf только для post-->
     <button type="submit">Отправить</button>
 </form>
 
-<form method="post" action="filter">
-    <input type="text" name="filter" placeholder="Фраза для поиска.."/>
-    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+<form method="get" action="/main">
+    <input type="text" name="filter" value="${filter!}" placeholder="Тэг для поиска.."/>
     <button type="submit">Отфильтровать</button>
 </form>
 
 <div>Список сообщений:</div>
 <#list messages as message>
-    <b>${message.id}</b>
-    <splan>${message.text}</splan>
-    <i>${message.tag}</i>
-    <strong>${message.getAuthorName()}</strong>
+<strong>${message.getAuthorName()} : </strong>
+    <a>${message.text}</a>
+    <i> / ${message.tag}</i>
+
     <br>
 <#else>
 Сообщений нет
