@@ -4,6 +4,7 @@ import com.example.entity.Role;
 import com.example.entity.User;
 import com.example.repos.UserRepos;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.Set;
 
 @Controller
 @RequestMapping("/user")
+@PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
     @Autowired
     private UserRepos userRepos;
@@ -47,7 +49,6 @@ public class UserController {
         for(Role r: roles){
             setRoles.add(r.toString());
         }
-        System.out.println(setRoles);
         for(String key: chekbox.keySet()){
             if(setRoles.contains(key)){
                 user.getRoles().add(Role.valueOf(key));
