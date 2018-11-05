@@ -1,7 +1,7 @@
 <#import "parts/common.ftl" as c>
 <@c.page>
 Изменение пользователей:
-<form method="post" action="/user">
+<form action="/user" method="post">
     <input type="text" name="userName" value="${user.username}">
     <#list roles as role>
         <div>

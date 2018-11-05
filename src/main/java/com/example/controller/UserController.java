@@ -6,9 +6,11 @@ import com.example.repos.UserRepos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/user")
@@ -29,6 +31,31 @@ public class UserController {
         model.addAttribute("roles", Role.values());
 
         return "userEdit";
+    }
+
+    @PostMapping
+    public String saveEdit(
+            @RequestParam("userId") User user,
+            @RequestParam Map<String, String> chekbox,
+            @RequestParam String userName){
+
+        user.getRoles().clear();
+        user.setUsername(userName);
+
+        Role[] roles = Role.values();
+        Set<String> setRoles = new HashSet<>();
+        for(Role r: roles){
+            setRoles.add(r.toString());
+        }
+        System.out.println(setRoles);
+        for(String key: chekbox.keySet()){
+            if(setRoles.contains(key)){
+                user.getRoles().add(Role.valueOf(key));
+            }
+        }
+
+        userRepos.save(user);
+        return "redirect:/user";
     }
 
 }
