@@ -1,7 +1,7 @@
 <#import "parts/common.ftl" as c>
 <#import "parts/logInOut.ftl" as l>
 <@c.page>
-Регистрация нового пользователя <br>
+<div class="mb-2">Регистрация нового пользователя:</div>
 ${message!}
-<@l.login "/registration"/>
+<@l.login "/registration" true/>
 </@c.page>

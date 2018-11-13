@@ -34,7 +34,6 @@ public class MainController {
 
     @GetMapping("main")
     public String main(
-            @AuthenticationPrincipal User user,
             @RequestParam(required = false, defaultValue = "") String filter,
             Model model){
         Iterable<Message> messages;
@@ -44,9 +43,6 @@ public class MainController {
 
         } else{
             messages = messageRepos.findAll();
-        }
-        if(user.getRoles().contains(Role.valueOf("ADMIN"))){
-            model.addAttribute("admin", true);
         }
 
         model.addAttribute("messages", messages);
